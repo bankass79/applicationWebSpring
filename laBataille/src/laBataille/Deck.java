@@ -23,10 +23,6 @@ public class Deck {
 	}
 
 
-
-
-
-
 	public Deck(int nbVals) {
 		
 		deck= new LinkedList<Integer> ();
@@ -86,25 +82,23 @@ public class Deck {
 	
 	public Integer pick (Deck d){
 		
-		d= new Deck ();
-		int j=0;
-		if (!d.isEmpty()){
-		
-			j= d.deck.removeFirst();
-			d.deck.addLast(j);
-		return nbVals;	
-		} else {
+		if (d.isEmpty()){
 			
 			return null;
 		}
 		
+		Integer card=d.deck.removeFirst();
+		
+		this.deck.addLast(card);
+		
+		return card;
+
 		
 	}
 	//Cette méthode supprime une à une toutes les cartes du paquet d et les ajoutes à la fin du paquet courant.
 	
 		public void  pickAll(Deck d){
-		
-		d= new Deck ();
+	
 		int card=0;
 		
 		for (int i=0; i<d.size(); i++){
@@ -118,15 +112,71 @@ public class Deck {
 	}
 	
   // Cette méthode renvoie true  si l'objet courant est un paquet valide
-	public boolean isDeck (int nbVals){
 	
-		if(nbVals<1 || nbVals>4){
-			
-			return true;
-		} else{
+		public boolean isDeck (int nbVals){
+	
+		int [] compteur= new int [nbVals]; 
 		
-		return false;
+		for (Integer x: deck ){
+		
+		if(x<1 || x>nbVals){
+			
+			compteur [x-1]++;
+			
+			return false;
+		}
 		}
 		
+		for(int i=0; i<nbVals; i++){
+			
+			
+			if(compteur [i]>4){
+				
+				return false;
+			}
+		}
+		return true;
 	}
+	
+	//la méthode cut() renvoie le nombre de cartes du "premier" paquet
+	
+		public int cut (){
+		
+		int n =0;
+		
+		for(int i=0; i<size (); i++){
+			
+			if(Math.random()<0.5){
+				
+				n++;
+				
+			}
+		
+		}
+		return n;
+	}
+
+
+	public Deck split() {
+		
+		Deck r = new Deck();
+		int c=cut();
+		for(int i=0; i<c; i++)
+			r.pick(this);
+		return r;
+
+	}
+
+
+	public Deck copy() {
+		Deck d = new Deck();
+		for(Integer card:this.deck)
+			d.deck.addLast(card);
+		return d;
+
+	}
+	
+	//La methode Math.random() renvoie une valeur  choisie au hasard dans l'interval [0, 1[, permet de simuler  des lancers.
+   
+	
 }
