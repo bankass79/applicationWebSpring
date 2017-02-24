@@ -1,6 +1,7 @@
 package laBataille;
 
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Deck {
@@ -156,7 +157,6 @@ public class Deck {
 		return n;
 	}
 
-
 	public Deck split() {
 		
 		Deck r = new Deck();
@@ -167,7 +167,6 @@ public class Deck {
 
 	}
 
-
 	public Deck copy() {
 		Deck d = new Deck();
 		for(Integer card:this.deck)
@@ -176,7 +175,52 @@ public class Deck {
 
 	}
 	
-	//La methode Math.random() renvoie une valeur  choisie au hasard dans l'interval [0, 1[, permet de simuler  des lancers.
+	public void riffleWith(Deck k){
+		
+		Deck resultat =new Deck ();
+		
+	   double proba=0.0;
+	   
+	   
+	   while (!deck.isEmpty() && !k.isEmpty() ){
+		   
+		   
+		   proba= (k.size()/(k.size()+ deck.size()));
+		   
+		   if(Math.random()<proba){
+			   
+			   resultat.pick(k);
+		   } else{
+			     
+			   resultat.pick(this);
+		   }
+	   }
+	}
+
+	public int[] countCards(int i) {
+		int[] count = new int[nbVals+1];
+		for (Integer x : deck) {
+			if ((x < 1) || (x > nbVals))
+				count[0]++;
+			else count[x]++;
+		}
+		return count;
+
+	}
+	
+	public boolean extractSubdeck(Deck d) {
+		Iterator<Integer> it = d.deck.iterator ();
+		for(Integer card : this.deck){
+			if (!it.hasNext()) return false;
+			while(it.next() != card){
+				if (!it.hasNext()) return false;
+			}
+			it.remove();
+		};
+		return true;
+
+	}
+	
    
 	
 }
