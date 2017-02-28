@@ -1,7 +1,5 @@
 package matchTree;
 
-import java.util.Arrays;
-
 public class Ligne {
 
 	private final int[] fruits;
@@ -30,7 +28,7 @@ public class Ligne {
 
 	public boolean estValide() {
 		
-		for(int i=0; i<fruits.length; i++){
+		for(int i=0; i<fruits.length-2; i++){
 			
 			
 			if((fruits[i]==fruits[i-1]) && (fruits[i]==fruits[i+1])){
